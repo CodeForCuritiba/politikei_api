@@ -2,4 +2,11 @@
 
 # Auth
 
-Enviar post para `http://politikei-api.herokuapp.com/api/v1/auth` contendo `email` e `password`
+POST - `api/v1/auth`
+
+```json
+{
+	email : "john@doe.com",
+	password : "123456"
+}
+```
