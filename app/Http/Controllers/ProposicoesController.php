@@ -16,7 +16,7 @@ class ProposicoesController extends Controller
     public function index()
     {
         $proposicoes = Proposicao::all();
-        return response()->json($proposicoes);
+        return response()->json($proposicoes, 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
