@@ -15,7 +15,7 @@ class ProposicoesController extends Controller
      */
     public function index()
     {
-        $proposicoes = Proposicao::all();
+        $proposicoes = Proposicao::all()->select('id', 'parlamentar_id', 'categoria_id', 'ementa', 'resumo', 'nome', 'camara_id', 'situacao', 'descricao', 'colaborador_id');
         return response()->json($proposicoes, 200, [], JSON_UNESCAPED_UNICODE);
     }
 
