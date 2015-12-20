@@ -10,7 +10,7 @@ class User extends Model implements AuthenticatableContract
 {
     use Authenticatable;
 
-    protected $fillable = ['name', 'email', 'password', 'avatar'];
-    protected $hidden = ['password', 'roles', 'avatar', 'confirmation', 'status', 'facebook_id'];
+    protected $fillable = ['name', 'email', 'password', 'avatar_id'];
+    protected $hidden = ['password', 'roles', 'avatar_id', 'confirmation', 'status', 'facebook_id'];
 
 }
