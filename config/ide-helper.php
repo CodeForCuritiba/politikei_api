@@ -83,7 +83,7 @@ return array(
     */
     
     'interfaces' => array(
-        '\Illuminate\Contracts\Auth\Authenticatable' => config('auth.model', 'App\User'),
+        '\Illuminate\Contracts\Auth\Authenticatable' => config('auth.model', 'App\Models\User'),
     ),
 
     /*
