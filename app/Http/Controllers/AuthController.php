@@ -92,7 +92,7 @@ class AuthController extends Controller
         $user[$provider.'_id'] = $providerUser->id;
         $user->name = isset($providerUser->name) ? $providerUser->name : null;
         $user->email = isset($providerUser->email) ? $providerUser->email : null;
-        $user->avatar = $avatarUrl.'?type=normal';
+        //$user->avatar = $avatarUrl.'?type=normal';
 
         return $user;
     }
