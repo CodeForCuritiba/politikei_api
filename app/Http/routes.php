@@ -14,6 +14,7 @@ Route::group(['prefix' => 'api/v1/'], function () {
     Route::group(['middleware' => 'jwt.auth'], function () {
         Route::get('authenticate/user', 'AuthController@getAuthenticatedUser');
         Route::get('users', 'UsersController@getIndex');
-        Route::get('proposicoes', 'ProposicoesController@index');
+        Route::get('proposicoes/{user_id}', 'ProposicoesController@index');
+        Route::post('proposicoes/votar/{id}', 'ProposicoesController@votar');
     });
 });
