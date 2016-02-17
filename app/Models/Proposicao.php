@@ -13,4 +13,9 @@ class Proposicao extends Model
     {
         return $this->hasMany('App\Models\Voto');
     }
+
+    public function parlamentar()
+    {
+        return $this->belongsTo('App\Models\Parlamentar');
+    }
 }

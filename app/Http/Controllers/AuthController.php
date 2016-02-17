@@ -34,8 +34,10 @@ class AuthController extends Controller
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
 
+            $customClaims = ['exp' => '1577836800'];
+
             // Tenta criar token para o usuário
-            if (!$token = JWTAuth::fromUser($user)) {
+            if (!$token = JWTAuth::fromUser($user, $customClaims)) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
 
@@ -44,6 +46,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
+        $token = JWTAuth::refresh($token);
         // if no errors are encountered we can return a JWT
         return response()->json(compact('token'));
     }

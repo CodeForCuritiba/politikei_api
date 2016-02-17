@@ -33,6 +33,7 @@ class ProposicoesController extends Controller
             $proposicoes[$key]->votos_favor = $value->votos()->where('voto', 's')->count();
             $proposicoes[$key]->votos_contra = $value->votos()->where('voto', 'n')->count();
             $proposicoes[$key]->voto_usuario = $value->votos()->where('user_id', $user->id)->first();
+            $proposicoes[$key]->parlamentar = $value->parlamentar()->first();
         }
         
         $response = [ "user" => $user, "proposicoes" => $proposicoes];
