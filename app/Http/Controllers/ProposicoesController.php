@@ -27,7 +27,7 @@ class ProposicoesController extends Controller
             $user->save();
         }
 
-        $proposicoes = Proposicao::select('id', 'parlamentar_id', 'categoria_id', 'ementa', 'resumo', 'nome', 'camara_id', 'situacao', 'descricao', 'colaborador_id')->get();
+        $proposicoes = Proposicao::select('id', 'parlamentar_id', 'categoria_id', 'ementa', 'resumo', 'nome', 'camara_id', 'situacao', 'descricao', 'colaborador_id')->whereNotNull('parlamentar_id')->get();
 
         foreach ($proposicoes as $key => $value) {
             $proposicoes[$key]->votos_favor = $value->votos()->where('voto', 's')->count();
