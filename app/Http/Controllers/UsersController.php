@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
+
 /*
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
@@ -14,7 +15,7 @@ class UsersController extends Controller
 {
     public function test(Request $request)
     {
-            
+
     }
     public function index()
     {

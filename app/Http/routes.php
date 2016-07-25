@@ -16,4 +16,4 @@ $app->get('/', function () use ($app) {
     //return $app->version();
 });
 
-$app->get('/test','UsersController@test');
+$app->get('/test','UsersController@index');
