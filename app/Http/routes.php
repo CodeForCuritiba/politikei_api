@@ -17,3 +17,5 @@ $app->get('/', function () use ($app) {
 });
 
 $app->get('/test','UsersController@test');
+
+
