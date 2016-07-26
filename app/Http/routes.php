@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -13,7 +12,13 @@
 
 $app->get('/', function () use ($app) {
     return "Politikei api";
-    //return $app->version();
 });
 
+$app->group(['prefix'=>'user'], function () use($app)
+{
+    $app->get('/','App\Http\Controllers\UsersController@index');
+    $app->get('/{id}','App\Http\Controllers\UsersController@show');
+    $app->post('new','App\Http\Controllers\UsersController@store');
+
+});
 $app->get('/test','UsersController@index');

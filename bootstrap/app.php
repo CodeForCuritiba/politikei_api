@@ -8,10 +8,6 @@ try {
     //
 }
 
-//Dotenv\Dotenv::makeMutable();
-//Dotenv\Dotenv::load(__DIR__.'/../');
-//Dotenv\Dotenv::makeImmutable();
-
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -64,7 +60,7 @@ $app->singleton(
 // ]);
 
 // $app->routeMiddleware([
-                    //     'auth' => App\Http\Middleware\Authenticate::class,
+//     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
 /*
@@ -97,7 +93,6 @@ $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
 
-class_alias('LaravelDoctrine\ORM\Facades\EntityManager', 'EntityManager');
-class_alias('LaravelDoctrine\ORM\Facades\Registry', 'Registry');
-class_alias('LaravelDoctrine\ORM\Facades\Doctrine', 'Doctrine');
+$app->withEloquent();
+
 return $app;

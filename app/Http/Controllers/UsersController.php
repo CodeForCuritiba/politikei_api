@@ -49,14 +49,21 @@ class UsersController extends Controller
         //return ($salvedUser)? new Request('New user created', HTTP_CREATED)->json($response, 200, [], JSON_UNESCAPED_UNICODE) : new Request('Can\'t create new user', 500);
     }
 
-    public function show(Request $request)
+    public function show($id)
     {
-        $this->validate($request,[
-            'id'=>'integer|required'
-            ,
-        ]);
+        if (empty($id)) {
+            return response()
+                    ->json(['id'=>["The id field is required."] ])
+                    ->header('Status',422);
+        }
+
+        $find = User::find($id);
+
+        if ($find == null) {
+            header("HTTP/1.0 404 User not found");
+        }
+        return $find;
 /*
-        $find = $this->getUser($request->input('id') );
         return ($find == null)? new Response('User not found', 204) : new Response($find, 200) ;
 */
     }
