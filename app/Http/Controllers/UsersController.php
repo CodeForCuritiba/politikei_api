@@ -13,10 +13,6 @@ use Illuminate\Validation\Validator;
 */
 class UsersController extends Controller
 {
-    public function test(Request $request)
-    {
-
-    }
     public function index()
     {
         $users = User::all();
@@ -36,7 +32,7 @@ class UsersController extends Controller
             ,'password'=>'min:6|required'
             ,
         ]);
-/*
+
         $user = new User();
         $user->name = $request->input("name");
         $user->email = $request->input("email");
@@ -44,59 +40,51 @@ class UsersController extends Controller
 
         $salvedUser = $user->save();
 
-        $response = ['user'=>$salvedUser];
-*/
-        //return ($salvedUser)? new Request('New user created', HTTP_CREATED)->json($response, 200, [], JSON_UNESCAPED_UNICODE) : new Request('Can\'t create new user', 500);
+        $response = ['user'=>"user/{$user->id}"];
+
+        return response()->json($response, 201);
     }
 
     public function show($id)
     {
-        if (empty($id)) {
+        if (empty($id) ) {
             return response()
-                    ->json(['id'=>["The id field is required."] ])
-                    ->header('Status',422);
+            ->json(['id'=>["The id field is required or invalid id"] ],422);
         }
 
         $find = User::find($id);
-
         if ($find == null) {
-            header("HTTP/1.0 404 User not found");
+            return response()
+            ->json(['id'=>["User not found"] ],404);
         }
         return $find;
-/*
-        return ($find == null)? new Response('User not found', 204) : new Response($find, 200) ;
-*/
-    }
-
-    public function edit(Request $request)
-    {
-        $this->validate($request,[
-            'id'=>'integer|required'
-            ,
-        ]);
-/*
-        $find = $this->getUser($request->input('id') );
-        return ($find == null)? new Response('User not found',204) : new Response($find, 200) ;
-*/
     }
 
     public function update(Request $request)
     {
         $this->validate($request,[
             'id'=>'integer|required'
+            ,'name'=>'required'
+            ,'email'=>'email|required'
+            ,'password'=>'min:6|required'
             ,
         ]);
-/*
+
         $user = User::find($request->input('id') );
+
+
+        if ($user == null) {
+            return response()
+            ->json(['id'=>["User not found"] ],404);
+        }
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = $request->input('password');
 
-        //TODO: Fazer uma response pimpa com textos legais;
-        $save = $user->save();
+        $user->save();
+        $response = ['user'=>"user/{$user->id}"];
 
-        return ($save)? new Response('User updated',200) : new Response('Error on update user',500);
-*/
+        return response()->json($response, 200);
     }
 }
