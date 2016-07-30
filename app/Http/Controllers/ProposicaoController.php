@@ -14,7 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
-class ProposicoesController extends Controller
+class ProposicaoController extends Controller
 {
     /**
      * Display a listing of the resource.
