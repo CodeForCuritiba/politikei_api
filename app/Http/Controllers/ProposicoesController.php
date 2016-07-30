@@ -1,12 +1,16 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Proposicao;
+use App\Voto;
 use Auth;
 use App\Http\Controllers\Controller;
+/*
 use App\Models\Proposicao;
 use App\Models\Voto;
 use App\Models\User;
+*/
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -19,9 +23,15 @@ class ProposicoesController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        // TODO: Alterar para pegar pelo usuario autenticado
+//        $user = Auth::user();
+        $user = (object)['id'=>4];
 
-        $proposicoes = Proposicao::select('id', 'tipo', 'nome', 'parlamentar_id', 'categoria_id', 'ementa', 'resumo', 'nome', 'camara_id', 'situacao', 'descricao', 'colaborador_id')->whereNotNull('parlamentar_id')->get();
+        //$proposicoes = Proposicao::select('id', 'tipo', 'nome', 'parlamentar_id', 'categoria_id', 'ementa', 'resumo', 'nome', 'camara_id', 'situacao', 'descricao', 'colaborador_id')->whereNotNull('parlamentar_id')->get();
+
+        $proposicoes = Proposicao::select('id', 'nome', 'descricao', 'resumo', 'ementa', 'categoria',
+           'camara', 'situacao', 'autor', 'parlamentar', 'parlamentar_partido', 'data_apresentacao',
+           'data_conclusao', 'regime_tramitacao', 'apreciacao', 'explicacao_ementa','link','numero','ano')->get();
 
         foreach ($proposicoes as $key => $value) {
             $proposicoes[$key]->votos_favor = $value->votos()->where('voto', 's')->count();
@@ -39,27 +49,34 @@ class ProposicoesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function votar($id)
+    public function vote(Request $request)
     {
         $this->validate($request,[
             'id'=>'integer|required'
-            ,
+            ,'user_id'=>'integer|required'
+            ,'user_vote'=>'string|size:1|required'
         ]);
-/*
-        $user_id = Input::get("user_id");
-        $voto_usuario = Input::get("voto_usuario");
 
-        $voto = Voto::where('proposicao_id', $id)->where('user_id', $user_id)->first();
+        /*$user_id = Input::get("user_id");
+        $voto_usuario = Input::get("user_vote");
+*/
+        $voto = Voto::where('proposicao_id', $request->input('id') )
+                    ->where('user_id', $request->input('user_id') )
+                    ->first();
 
-        if(!$voto){
+        if($voto == null)
+        {
             $voto = new Voto;
-            $voto->user_id = $user_id;
-            $voto->proposicao_id = $id;
+            $voto->user_id = $request->input('user_id');
+            $voto->proposicao_id = $request->input('id');
         }
 
-        $voto->voto = $voto_usuario;
+        $voto->voto = $request->input('id');
         $voto->save();
-*/
+
+        // TODO: Create a json response with link to new recurse:
+        $response = [];//['user'=>"user/{$voto->id}"];
+        return response()->json($response, 201);
     }
 
     /**
