@@ -23,4 +23,20 @@ $app->group(['prefix'=>'user'], function () use($app)
 
     $app->put('/{id}','App\Http\Controllers\UsersController@update');
 });
+
+$app->group(['prefix'=>'propositions'], function () use($app)
+{
+    $app->get('/','App\Http\Controllers\ProposicoesController@index');
+    $app->post('vote','App\Http\Controllers\ProposicoesController@vote');
+
+});
+
+
+
+
+
+
+
+
+
 $app->get('/test','UsersController@index');

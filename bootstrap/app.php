@@ -78,6 +78,8 @@ $app->singleton(
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(LaravelDoctrine\ORM\DoctrineServiceProvider::class);
+
+$app->register(Laravel\Socialite\SocialiteServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
