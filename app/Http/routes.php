@@ -16,12 +16,10 @@ $app->get('/', function () use ($app) {
 
 $app->group(['prefix'=>'user'], function () use($app)
 {
-    $app->get('/','App\Http\Controllers\UsersController@index');
-    $app->get('/{id}',',App\Http\Controllers\UsersController@show');
-
-    $app->post('new','App\Http\Controllers\UsersController@store');
-
-    $app->put('/{id}','App\Http\Controllers\UsersController@update');
+    $app->get('/','App\Http\Controllers\UserController@index');
+    $app->get('/{id}',',App\Http\Controllers\UserController@show');
+    $app->post('new','App\Http\Controllers\UserController@store');
+    $app->put('/{id}','App\Http\Controllers\UserController@update');
 });
 
 $app->group(['prefix'=>'propositions'], function () use($app)
@@ -30,13 +28,3 @@ $app->group(['prefix'=>'propositions'], function () use($app)
     $app->post('vote','App\Http\Controllers\ProposicoesController@vote');
 
 });
-
-
-
-
-
-
-
-
-
-$app->get('/test','UsersController@index');
