@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Validation\Validator;
 */
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
@@ -62,7 +62,6 @@ class UsersController extends Controller
 
         $user = User::find($request->input('id') );
 
-
         if ($user == null) {
             return response()
             ->json(['id'=>["User not found"] ],404);
@@ -76,5 +75,14 @@ class UsersController extends Controller
         $response = ['user'=>"user/{$user->id}"];
 
         return response()->json($response, 200);
+    }
+
+    public function destroy(Request $request)
+    {
+        $this->validate($request,[
+            'id'=>'required|integer|exists:users,id'
+        ]);
+
+        User::destroy($request->input('id') );
     }
 }

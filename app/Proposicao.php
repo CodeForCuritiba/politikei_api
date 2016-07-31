@@ -1,7 +1,8 @@
 <?php
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Proposicao;
 
 class Proposicao extends Model
 {
@@ -20,9 +21,13 @@ class Proposicao extends Model
     {
         return $this->belongsTo('App\Models\Parlamentar');
     }
+<<<<<<< HEAD
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
 }
+=======
+}
+>>>>>>> c2685767d5da3a667e03f47b6f87dbc0675e27e0
