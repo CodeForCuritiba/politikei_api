@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 
-class Parlamentar extends Model 
+class Parlamentar extends Model
 {
 	protected $table = 'parlamentares';
     public $timestamps  = false;

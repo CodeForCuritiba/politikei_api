@@ -17,9 +17,19 @@ $app->get('/', function () use ($app) {
 $app->group(['prefix'=>'user'], function () use($app)
 {
     $app->get('/','App\Http\Controllers\UserController@index');
-    $app->get('/{id}',',App\Http\Controllers\UserController@show');
+    $app->get('/{id}','App\Http\Controllers\UserController@show');
     $app->post('new','App\Http\Controllers\UserController@store');
     $app->put('/{id}','App\Http\Controllers\UserController@update');
+    $app->delete('/{id}','App\Http\Controllers\UserController@destroy');
+});
+
+$app->group(['prefix'=>'parliamentary'],function () use($app)
+{
+    $app->get('/','App\Http\Controllers\ParlamentarController@index');
+    $app->get('/{id}','App\Http\Controllers\ParlamentarController@show');
+    $app->post('new','App\Http\Controllers\ParlamentarController@store');
+    $app->put('/{id}','App\Http\Controllers\ParlamentarController@update');
+    $app->delete('/{id}','App\Http\Controllers\ParlamentarController@destroy');
 });
 
 $app->group(['prefix'=>'propositions'], function () use($app)
