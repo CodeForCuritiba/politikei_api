@@ -20,4 +20,9 @@ class Proposicao extends Model
     {
         return $this->belongsTo('App\Models\Parlamentar');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }
