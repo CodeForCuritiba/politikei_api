@@ -23,7 +23,7 @@ $app->group(['prefix'=>'user'], function () use($app)
     $app->delete('/{id}','App\Http\Controllers\UserController@destroy');
 });
 
-$app->group(['prefix'=>'parliamentary'],function () use($app)
+$app->group(['prefix'=>'parlamentary'],function () use($app)
 {
     $app->get('/','App\Http\Controllers\ParlamentarController@index');
     $app->get('/{id}','App\Http\Controllers\ParlamentarController@show');
@@ -35,6 +35,8 @@ $app->group(['prefix'=>'parliamentary'],function () use($app)
 $app->group(['prefix'=>'propositions'], function () use($app)
 {
     $app->get('/','App\Http\Controllers\ProposicoesController@index');
-    $app->post('vote','App\Http\Controllers\ProposicoesController@vote');
-
+    $app->get('/{id}','App\Http\Controllers\ProposicoesController@show');
+    $app->post('new','App\Http\Controllers\ProposicoesController@store');
+    $app->put('/{id}','App\Http\Controllers\ProposicoesController@update');
+    $app->delete('/{id}','App\Http\Controllers\ProposicoesController@destroy');
 });
