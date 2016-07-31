@@ -18,18 +18,21 @@ class ProposicaoController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        //$user = (object)['id'=>1];
+        //$user = Auth::user();
+        $user = (object)['id'=>1];
 
         //$proposicoes = Proposicao::select('id', 'tipo', 'nome', 'parlamentar_id', 'categoria_id', 'ementa', 'resumo', 'nome', 'camara_id', 'situacao', 'descricao', 'colaborador_id')->whereNotNull('parlamentar_id')->get();
         //$proposicoes = Proposicao::select('id', 'nome', 'descricao', 'resumo', 'ementa', 'categoria', 'camara', 'situacao', 'autor', 'parlamentar', 'parlamentar_partido', 'data_apresentacao', 'data_conclusao', 'regime_tramitacao', 'apreciacao', 'explicacao_ementa','link','numero','ano' )->get();
 
         $proposicoes = Proposicao::all();
 
-        if($user == null){
+        foreach ($proposicoes as $key => $value) {
+            $proposicoes[$key]->votos_favor = $value->votos()->where('voto', 's')->count();
+            $proposicoes[$key]->votos_contra = $value->votos()->where('voto', 'n')->count();
+        }
+
+        if($user != null){
             foreach ($proposicoes as $key => $value) {
-                $proposicoes[$key]->votos_favor = $value->votos()->where('voto', 's')->count();
-                $proposicoes[$key]->votos_contra = $value->votos()->where('voto', 'n')->count();
                 $proposicoes[$key]->voto_usuario = $value->votos()->where('user_id', $user->id)->first();
                 $proposicoes[$key]->parlamentar = $value->parlamentar()->first();
             }
@@ -48,28 +51,28 @@ class ProposicaoController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'nome'=>'required',
-            'descricao'=>'required',
-            'resumo'=>'required',
-            'ementa'=>'required',
-            'categoria'=>'required',
-            'camara'=>'required',
-            'situacao'=>'required',
-            'autor'=>'required',
-            'parlamentar'=>'required',
-            'parlamentar_partido'=>'required',
-            'data_apresentacao'=>'required',
-            'data_conclusao'=>'required',
-            'regime_tramitacao'=>'required',
-            'apreciacao'=>'required',
-            'explicacao_ementa'=>'required',
-            'link'=>'required',
-            'numero'=>'required',
-            'ano'=>'required'
+            'nome'=>'required|string',
+            'descricao'=>'required|string',
+            'resumo'=>'required|string',
+            'ementa'=>'required|string',
+            'categoria'=>'required|string',
+            'camara'=>'required|string',
+            'situacao'=>'required|string',
+            'autor'=>'required|string',
+            'parlamentar'=>'required|string',
+            'parlamentar_partido'=>'required|string',
+            'data_apresentacao'=>'required|date_format:Y-m-d|before:now',
+            'data_conclusao'=>'required|date_format:Y-m-d|after:data_apresentacao|before:now',
+            'regime_tramitacao'=>'required|string',
+            'apreciacao'=>'required|string',
+            'explicacao_ementa'=>'required|string',
+            'link'=>'required|url',
+            'numero'=>'required|integer',
+            'ano'=>'required|date_format:Y'
         ]);
 
         $proposicao = new Proposicao();
-        $proposicao->name                 = $request->input("name");
+        $proposicao->nome                 = $request->input("nome");
         $proposicao->descricao            = $request->input("descricao");
         $proposicao->resumo               = $request->input("resumo");
         $proposicao->ementa               = $request->input("ementa");
@@ -124,24 +127,25 @@ class ProposicaoController extends Controller
     public function update(Request $request)
     {
         $this->validate($request,[
-            'nome'=>'required',
-            'descricao'=>'required',
-            'resumo'=>'required',
-            'ementa'=>'required',
-            'categoria'=>'required',
-            'camara'=>'required',
-            'situacao'=>'required',
-            'autor'=>'required',
-            'parlamentar'=>'required',
-            'parlamentar_partido'=>'required',
-            'data_apresentacao'=>'required',
-            'data_conclusao'=>'required',
-            'regime_tramitacao'=>'required',
-            'apreciacao'=>'required',
-            'explicacao_ementa'=>'required',
-            'link'=>'required',
-            'numero'=>'required',
-            'ano'=>'required'
+            'id'=>'required|integer|exists:proposicoes,id',
+            'nome'=>'required|string',
+            'descricao'=>'required|string',
+            'resumo'=>'required|string',
+            'ementa'=>'required|string',
+            'categoria'=>'required|string',
+            'camara'=>'required|string',
+            'situacao'=>'required|string',
+            'autor'=>'required|string',
+            'parlamentar'=>'required|string',
+            'parlamentar_partido'=>'required|string',
+            'data_apresentacao'=>'required|date_format:Y-m-d|before:now',
+            'data_conclusao'=>'required|date_format:Y-m-d|after:data_apresentacao|before:now',
+            'regime_tramitacao'=>'required|string',
+            'apreciacao'=>'required|string',
+            'explicacao_ementa'=>'required|string',
+            'link'=>'required|url',
+            'numero'=>'required|integer',
+            'ano'=>'required|date_format:Y'
         ]);
 
         $proposicao = Proposicao::find($request->input('id') );
@@ -150,7 +154,7 @@ class ProposicaoController extends Controller
             return response()->json(['id'=>["User not found"] ],404);
         }
 
-        $proposicao->name                 = $request->input("name");
+        $proposicao->nome                 = $request->input("nome");
         $proposicao->descricao            = $request->input("descricao");
         $proposicao->resumo               = $request->input("resumo");
         $proposicao->ementa               = $request->input("ementa");
@@ -181,16 +185,12 @@ class ProposicaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
+        $this->validate($request,[
+            'id'=>'required|integer|exists:proposicoes,id'
+        ]);
 
-        $proposicao = Proposicao::find($id);
-
-        if ($proposicao == null) {
-            return response()->json(['id'=>["Project not found"] ],404);
-        }
-        $proposicao->delete();
-
-        return response()->json(200);
+        Proposicao::destroy($request->input('id') );
     }
 }
