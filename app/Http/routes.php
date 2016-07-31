@@ -34,9 +34,9 @@ $app->group(['prefix'=>'parlamentary'],function () use($app)
 
 $app->group(['prefix'=>'propositions'], function () use($app)
 {
-    $app->get('/','App\Http\Controllers\ProposicoesController@index');
-    $app->get('/{id}','App\Http\Controllers\ProposicoesController@show');
-    $app->post('new','App\Http\Controllers\ProposicoesController@store');
-    $app->put('/{id}','App\Http\Controllers\ProposicoesController@update');
-    $app->delete('/{id}','App\Http\Controllers\ProposicoesController@destroy');
+    $app->get('/','App\Http\Controllers\ProposicaoController@index');
+    $app->get('/{id}','App\Http\Controllers\ProposicaoController@show');
+    $app->post('new','App\Http\Controllers\ProposicaoController@store');
+    $app->put('/{id}','App\Http\Controllers\ProposicaoController@update');
+    $app->delete('/{id}','App\Http\Controllers\ProposicaoController@destroy');
 });

@@ -18,8 +18,8 @@ class ProposicaoController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        //$user = (object)['id'=>1];
+        //$user = Auth::user();
+        $user = (object)['id'=>1];
 
         //$proposicoes = Proposicao::select('id', 'tipo', 'nome', 'parlamentar_id', 'categoria_id', 'ementa', 'resumo', 'nome', 'camara_id', 'situacao', 'descricao', 'colaborador_id')->whereNotNull('parlamentar_id')->get();
         //$proposicoes = Proposicao::select('id', 'nome', 'descricao', 'resumo', 'ementa', 'categoria', 'camara', 'situacao', 'autor', 'parlamentar', 'parlamentar_partido', 'data_apresentacao', 'data_conclusao', 'regime_tramitacao', 'apreciacao', 'explicacao_ementa','link','numero','ano' )->get();
@@ -48,23 +48,23 @@ class ProposicaoController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'nome'=>'required',
-            'descricao'=>'required',
-            'resumo'=>'required',
-            'ementa'=>'required',
-            'categoria'=>'required',
-            'camara'=>'required',
-            'situacao'=>'required',
-            'autor'=>'required',
-            'parlamentar'=>'required',
-            'parlamentar_partido'=>'required',
-            'data_apresentacao'=>'required',
+            'nome'=>'required|string',
+            'descricao'=>'required|string',
+            'resumo'=>'required|string',
+            'ementa'=>'required|string',
+            'categoria'=>'required|string',
+            'camara'=>'required|string',
+            'situacao'=>'required|string',
+            'autor'=>'required|string',
+            'parlamentar'=>'required|string',
+            'parlamentar_partido'=>'required|string',
+            'data_apresentacao'=>'required|date_format:YY-mm-dd|',
             'data_conclusao'=>'required',
             'regime_tramitacao'=>'required',
             'apreciacao'=>'required',
-            'explicacao_ementa'=>'required',
-            'link'=>'required',
-            'numero'=>'required',
+            'explicacao_ementa'=>'required|string',
+            'link'=>'required|url',
+            'numero'=>'required|integer',
             'ano'=>'required'
         ]);
 
