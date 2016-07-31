@@ -2,7 +2,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Proposicao;
 
 class Proposicao extends Model
 {
@@ -14,20 +13,15 @@ class Proposicao extends Model
 
     public function votos()
     {
-        return $this->hasMany('App\Models\Voto');
+        return $this->hasMany('App\Voto');
     }
 
     public function parlamentar()
     {
-        return $this->belongsTo('App\Models\Parlamentar');
+        return $this->belongsTo('App\Parlamentar');
     }
-<<<<<<< HEAD
-
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\User');
     }
 }
-=======
-}
->>>>>>> c2685767d5da3a667e03f47b6f87dbc0675e27e0

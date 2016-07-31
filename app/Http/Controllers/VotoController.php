@@ -3,17 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\VotoUser;
+use App\VotoParlamentar;
 
-class ExampleController extends Controller
+class VotoController extends Controller
 {
+
     /**
-     * Create a new controller instance.
+     * Show the form for creating a new resource.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function __construct()
+    public function votoUser(Request $request)
     {
-        //
+        $this->validate($request,[
+            'user_id'=>'integer|required',
+            'proposicao_id'=>'integer|required',
+            'voto'=>'string|size:1|required'
+        ]);
+
+        $voto = VotoUser::where('proposicao_id', $request->input('proposicao_id') )->where('user_id', $request->input('user_id') )->first();
+
+        if($voto == null)
+        {
+            $voto = new VotoUser;
+            $voto->user_id = $request->input('user_id');
+            $voto->proposicao_id = $request->input('proposicao_id');
+        }
+
+        $voto->voto = $request->input('voto');
+        $voto->save();
+
+        $response = ['status'=>'Registrado'];
+        return response()->json($response, 201);
     }
 
     /**
@@ -21,34 +43,27 @@ class ExampleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function vote(Request $request)
+    public function votoParlamentar(Request $request)
     {
         $this->validate($request,[
-            'id'=>'integer|required'
-            ,'user_id'=>'integer|required'
-            ,'user_vote'=>'string|size:1|required'
+            'parlamentar_id'=>'integer|required',
+            'proposicao_id'=>'integer|required',
+            'voto'=>'string|size:1|required'
         ]);
 
-        /*
-        $user_id = Input::get("user_id");
-        $voto_usuario = Input::get("user_vote");
-        */
-        $voto = Voto::where('proposicao_id', $request->input('id') )
-            ->where('user_id', $request->input('user_id') )
-            ->first();
+        $voto = VotoParlamentar::where('proposicao_id', $request->input('proposicao_id') )->where('parlamentar_id', $request->input('parlamentar_id') )->first();
 
         if($voto == null)
         {
-            $voto = new Voto;
-            $voto->user_id = $request->input('user_id');
-            $voto->proposicao_id = $request->input('id');
+            $voto = new VotoParlamentar();
+            $voto->parlamentar_id = $request->input('parlamentar_id');
+            $voto->proposicao_id = $request->input('proposicao_id');
         }
 
-        $voto->voto = $request->input('id');
+        $voto->voto = $request->input('voto');
         $voto->save();
 
-        // TODO: Create a json response with link to new recurse:
-        $response = [];//['user'=>"user/{$voto->id}"];
+        $response = ['status'=>'Registrado'];
         return response()->json($response, 201);
     }
 }
