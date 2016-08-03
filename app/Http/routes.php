@@ -40,3 +40,9 @@ $app->group(['prefix'=>'propositions'], function () use($app)
     $app->put('/{id}','App\Http\Controllers\ProposicaoController@update');
     $app->delete('/{id}','App\Http\Controllers\ProposicaoController@destroy');
 });
+
+$app->group(['prefix'=>'vote'], function () use($app)
+{
+    $app->post('/user','App\Http\Controllers\VotoController@votoUser');
+    $app->post('/parlamentary','App\Http\Controllers\VotoController@votoParlamentar');
+});
