@@ -44,6 +44,13 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(
+    Illuminate\Cache\CacheManager::class,
+    function ($app) {
+        return $app->make('cache');
+    }
+);
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -59,9 +66,9 @@ $app->singleton(
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -74,12 +81,33 @@ $app->singleton(
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Providers\EventServiceProvider::class);
 $app->register(LaravelDoctrine\ORM\DoctrineServiceProvider::class);
-
 $app->register(Laravel\Socialite\SocialiteServiceProvider::class);
+
+// ================================================================
+//                              JWT:
+// ================================================================
+$app->alias('cache', 'Illuminate\Cache\CacheManager');
+$app->alias('auth', 'Illuminate\Auth\AuthManager');
+$app->configure('jwt');
+$app->register('Tymon\JWTAuth\Providers\JWTAuthServiceProvider');
+$app->withFacades();
+
+class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
+/** This gives you finer control over the payloads you create if you require it.
+ *  Source: https://github.com/tymondesigns/jwt-auth/wiki/Installation
+ */
+
+class_alias('Tymon\JWTAuth\Facades\JWTFactory', 'JWTFactory'); // Optional
+
+$app->routeMiddleware([
+    'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+    'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,
+]);
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -90,11 +118,10 @@ $app->register(Laravel\Socialite\SocialiteServiceProvider::class);
 | can respond to, as well as the controllers that may handle them.
 |
 */
+$app->withEloquent();
 
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });
-
-$app->withEloquent();
 
 return $app;

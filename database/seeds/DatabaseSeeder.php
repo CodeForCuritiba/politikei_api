@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+use Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call('UsersTableSeeder');
+        //$password =  Crypt::encrypt('secret');
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' => 'test@test.com',
+            'password' => Hash::make('secret'),
+        ]);
     }
 }
