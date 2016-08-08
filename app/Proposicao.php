@@ -11,9 +11,14 @@ class Proposicao extends Model
         'camara', 'situacao', 'autor', 'parlamentar', 'parlamentar_partido', 'data_apresentacao',
         'data_conclusao', 'regime_tramitacao', 'apreciacao', 'explicacao_ementa','link','numero','ano'];
 
-    public function votos()
+    public function votosParlamentar()
     {
-        return $this->hasMany('App\Voto');
+        return $this->hasMany('App\VotoParlamentar');
+    }
+
+    public function votosUser()
+    {
+        return $this->hasMany('App\VotoUser');
     }
 
     public function parlamentar()
