@@ -16,6 +16,14 @@ class AuthController extends Controller {
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+
+     private function debug($thing='')
+     {
+         echo 'A que ponto chegaremos?';
+         print_r($thing);
+         die();
+     }
+
     public function postLogin(Request $request)
     {
         try
@@ -51,6 +59,10 @@ class AuthController extends Controller {
         {
             // something went wrong whilst attempting to encode the token
             return response()->json(['error' => 'could_not_create_token'], 500);
+        }
+        catch (ErrorException $e)
+        {
+            return response()->json(['error'=>'wtf_error!'], 500);
         }
 
         // all good so return the token

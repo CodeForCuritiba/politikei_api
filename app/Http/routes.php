@@ -10,7 +10,7 @@
 |
 */
 
-$app->get('login', 'Auth\AuthController@postLogin');
+$app->post('login', 'Auth\AuthController@postLogin');
 
 $app->group(['middleware'=>'jwt.auth'],function () use ($app)
 {
