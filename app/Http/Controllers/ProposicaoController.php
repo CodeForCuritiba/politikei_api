@@ -33,7 +33,7 @@ class ProposicaoController extends Controller
 
         if($user != null){
             foreach ($proposicoes as $key => $value) {
-                $proposicoes[$key]->voto_usuario = $value->votos()->where('user_id', $user->id)->first();
+                $proposicoes[$key]->voto_usuario = $value->votosUser()->where('user_id', $user->id)->first();
                 $proposicoes[$key]->parlamentar = $value->parlamentar()->first();
             }
         }
