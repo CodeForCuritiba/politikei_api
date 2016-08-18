@@ -29,12 +29,12 @@ class Proposicao extends Model
 
     public function votosParlamentar()
     {
-        return $this->hasMany('App\VotoParlamentar');
+        return $this->hasMany('App\VotosParlamentares');
     }
 
     public function votosUser()
     {
-        return $this->hasMany('App\VotoUser');
+        return $this->hasMany('App\VotosUsers');
     }
 
     public function parlamentar()
