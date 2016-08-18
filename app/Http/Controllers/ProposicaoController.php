@@ -27,8 +27,8 @@ class ProposicaoController extends Controller
         $proposicoes = Proposicao::all();
 
         foreach ($proposicoes as $key => $value) {
-            $proposicoes[$key]->votos_favor = $value->votos()->where('voto', 's')->count();
-            $proposicoes[$key]->votos_contra = $value->votos()->where('voto', 'n')->count();
+            $proposicoes[$key]->votos_favor = $value->votosUser()->where('voto', 's')->count();
+            $proposicoes[$key]->votos_contra = $value->votosUser()->where('voto', 'n')->count();
         }
 
         if($user != null){
