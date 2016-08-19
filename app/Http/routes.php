@@ -10,9 +10,6 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return "Politikei api";
-});
 
 $app->group(['prefix'=>'user'], function () use($app)
 {
@@ -35,6 +32,7 @@ $app->group(['prefix'=>'parlamentary'],function () use($app)
 $app->group(['prefix'=>'propositions'], function () use($app)
 {
     $app->get('/','App\Http\Controllers\ProposicaoController@index');
+
     $app->get('/{id}','App\Http\Controllers\ProposicaoController@show');
     $app->post('new','App\Http\Controllers\ProposicaoController@store');
     $app->put('/{id}','App\Http\Controllers\ProposicaoController@update');
@@ -45,4 +43,28 @@ $app->group(['prefix'=>'vote'], function () use($app)
 {
     $app->post('/user','App\Http\Controllers\VotoController@votoUser');
     $app->post('/parlamentary','App\Http\Controllers\VotoController@votoParlamentar');
+});
+
+$app->get('/', function () use ($app) {
+    return "Politikei api";
+});
+
+$app->post('/', function () use ($app) {
+    return "Politikei api";
+});
+
+$app->put('/', function () use ($app) {
+    return "Politikei api";
+});
+
+$app->delete('/', function () use ($app) {
+    return "Politikei api";
+});
+
+$app->options('/', function () use ($app) {
+    return "Politikei api";
+});
+
+$app->patch('/', function () use ($app) {
+    return "Politikei api";
 });

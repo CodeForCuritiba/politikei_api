@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\VotoUser;
-use App\VotoParlamentar;
+use App\VotosUsers;
+use App\VotosParlamentares;
 
 class VotoController extends Controller
 {
@@ -22,11 +22,11 @@ class VotoController extends Controller
             'voto'=>'string|size:1|required'
         ]);
 
-        $voto = VotoUser::where('proposicao_id', $request->input('proposicao_id') )->where('user_id', $request->input('user_id') )->first();
+        $voto = VotosUsers::where('proposicao_id', $request->input('proposicao_id') )->where('user_id', $request->input('user_id') )->first();
 
         if($voto == null)
         {
-            $voto = new VotoUser;
+            $voto = new VotosUsers;
             $voto->user_id = $request->input('user_id');
             $voto->proposicao_id = $request->input('proposicao_id');
         }
