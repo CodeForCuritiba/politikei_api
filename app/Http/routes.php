@@ -9,6 +9,11 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+$app->group(['prefix' => 'auth'], function () use($app)
+{
+    $app->post('/', 'App\Http\Controllers\AuthController@authenticate');
+    $app->post('/{provider}', 'App\Http\Controllers\AuthController@oAuth');
+});
 
 
 $app->group(['prefix'=>'user'], function () use($app)
