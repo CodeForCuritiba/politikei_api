@@ -66,9 +66,6 @@ $app->singleton(
     palanik\lumen\Middleware\LumenCors::class
  ]);
 
-$app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
-]);
 
 /*
 |--------------------------------------------------------------------------
@@ -87,26 +84,31 @@ $app->register(App\Providers\EventServiceProvider::class);
 $app->register(LaravelDoctrine\ORM\DoctrineServiceProvider::class);
 $app->register(Laravel\Socialite\SocialiteServiceProvider::class);
 
+
 // ================================================================
 //                              JWT:
 // ================================================================
 $app->alias('cache', 'Illuminate\Cache\CacheManager');
 $app->alias('auth', 'Illuminate\Auth\AuthManager');
+
 $app->configure('jwt');
-$app->register('Tymon\JWTAuth\Providers\JWTAuthServiceProvider');
+
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
 $app->withFacades();
 
 class_alias('Tymon\JWTAuth\Facades\JWTAuth', 'JWTAuth');
+
 /** This gives you finer control over the payloads you create if you require it.
  *  Source: https://github.com/tymondesigns/jwt-auth/wiki/Installation
  */
 
-class_alias('Tymon\JWTAuth\Facades\JWTFactory', 'JWTFactory'); // Optional
+//class_alias('Tymon\JWTAuth\Facades\JWTFactory', 'JWTFactory'); // Optional
 
-$app->routeMiddleware([
-    'jwt.auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+/*$app->routeMiddleware([
+    'auth'    => Tymon\JWTAuth\Middleware\GetUserFromToken::class,
     'jwt.refresh' => Tymon\JWTAuth\Middleware\RefreshToken::class,
-]);
+]);*/
 
 /*
 |--------------------------------------------------------------------------

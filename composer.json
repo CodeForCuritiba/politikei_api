@@ -1,21 +1,30 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "Politikei API",
+    "description": "The Politikei API.",
+    "keywords": ["framework", "laravel", "lumen", "politikei"],
     "license": "MIT",
     "type": "project",
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/tymondesigns/jwt-auth/"
+        }
+    ],
     "require": {
         "php": ">=5.5.9",
         "laravel/lumen-framework": "5.2.*",
         "vlucas/phpdotenv": "^2.3",
         "laravel-doctrine/orm": "1.2.*",
         "laravel/socialite": "^2.0",
-        "tymon/jwt-auth": "^0.5.6",
         "basicit/lumen-vendor-publish": "^1.0",
         "illuminate/routing": "^5.2",
-        "palanik/lumen-cors": "dev-master"
+        "palanik/lumen-cors": "dev-master",
+        "irazasyed/jwt-auth-guard": "^1.0"
     },
     "require-dev": {
+        "tymon/jwt-auth": "dev-develop",
         "fzaninotto/faker": "~1.4",
         "phpunit/phpunit": "~4.0"
     },
