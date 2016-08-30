@@ -33,6 +33,29 @@ class AuthController extends Controller
         return null;
     }
 
+    public function register(Request $request)
+    {
+
+        $credentials = $this->getCredentials($request);
+
+        $user = User::where('email', $credentials['email'])->first();
+        if($user != null)
+        {
+            return response()->json(['error' => 'invalid_credentials'], 401);
+        }
+
+        $user = new User();
+        $user->email = $credentials['email'];
+        $user->password = $credentials['password'];
+        $user->save();
+
+        if (!$token = JWTAuth::fromUser($user)) 
+        {
+            return response()->json(['error' => 'invalid_credentials'], 401);
+        }
+        return response()->json(compact('token'));
+    }
+
     public function authenticate(Request $request)
     {
         $credentials = $this->getCredentials($request);
@@ -114,24 +137,6 @@ class AuthController extends Controller
 
         $user->save();
         return $user;
-    }
-
-    public function getAuthenticatedUser()
-    {
-        try {
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['token_expired'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['token_invalid'], $e->getStatusCode());
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-            return response()->json(['token_absent'], $e->getStatusCode());
-        }
-
-        // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user'));
     }
 
     protected function getCredentials(Request $request)

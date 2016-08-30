@@ -12,6 +12,7 @@
 $app->group(['prefix' => 'auth'], function () use($app)
 {
     $app->post('/', 'App\Http\Controllers\AuthController@authenticate');
+    $app->post('/register', 'App\Http\Controllers\AuthController@register');
     $app->post('/{provider}', 'App\Http\Controllers\AuthController@oAuth');
 });
 
