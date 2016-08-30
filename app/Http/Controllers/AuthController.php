@@ -89,7 +89,7 @@ class AuthController extends Controller
 
         //facebook stauff
         $graphUrl = 'https://graph.facebook.com';
-        $version = 'v2.5';
+        $version = 'v2.7';
         $response = $client->get($graphUrl.'/me?fields=name,picture,email&access_token=' . $accessToken, ['verify' => false]);
         $providerUser = json_decode($response->getBody());
         $avatarUrl = $graphUrl.'/'.$version.'/'.$providerUser->id.'/picture';
