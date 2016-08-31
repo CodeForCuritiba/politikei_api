@@ -20,8 +20,7 @@
         "laravel/socialite": "^2.0",
         "basicit/lumen-vendor-publish": "^1.0",
         "illuminate/routing": "^5.2",
-        "palanik/lumen-cors": "dev-master",
-        "irazasyed/jwt-auth-guard": "^1.0"
+        "palanik/lumen-cors": "dev-master"
     },
     "require-dev": {
         "tymon/jwt-auth": "dev-develop",

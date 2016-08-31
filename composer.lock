@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6b74838790d646ba5c9ae34201473d10",
-    "content-hash": "b4e53dea857ecb672c4f13df661a2f8f",
+    "hash": "ff31741287361bd7f840f951651a0b06",
+    "content-hash": "10c97931195f16cfeec3b6e25b05a039",
     "packages": [
         {
             "name": "basicit/lumen-vendor-publish",
@@ -1940,67 +1940,6 @@
             "description": "The Illuminate View package.",
             "homepage": "http://laravel.com",
             "time": "2016-08-01 13:49:14"
-        },
-        {
-            "name": "irazasyed/jwt-auth-guard",
-            "version": "v1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/irazasyed/jwt-auth-guard.git",
-                "reference": "efb6195b33bf4221c0553a081a6e3b2a476d2070"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/irazasyed/jwt-auth-guard/zipball/efb6195b33bf4221c0553a081a6e3b2a476d2070",
-                "reference": "efb6195b33bf4221c0553a081a6e3b2a476d2070",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~5.0",
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*",
-                "scrutinizer/ocular": "~1.1",
-                "squizlabs/php_codesniffer": "~2.3",
-                "tymon/jwt-auth": "^1.0@dev"
-            },
-            "suggest": {
-                "tymon/jwt-auth": "Add JWT Auth Package for Laravel and Lumen"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Irazasyed\\JwtAuthGuard\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Syed Irfaq R.",
-                    "email": "syed+gh@lukonet.com",
-                    "homepage": "https://lukonet.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "JWT Auth Guard for Laravel and Lumen",
-            "homepage": "https://github.com/irazasyed/laravel-jwt-guard",
-            "keywords": [
-                "irazasyed",
-                "jwt auth guard",
-                "jwt guard",
-                "laravel jwt auth guard",
-                "lumen jwt auth guard"
-            ],
-            "time": "2016-04-27 15:47:45"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -4794,7 +4733,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tymondesigns/jwt-auth/",
-                "reference": "821625d2419bbfd7aef6e5cb04eab62943878ffc"
+                "reference": "d887a59db4292d5c1b09bcf98c34828811f1520d"
             },
             "require": {
                 "illuminate/auth": "5.1.* || 5.2.* || 5.3.*",
@@ -4807,9 +4746,9 @@
             },
             "require-dev": {
                 "cartalyst/sentinel": "2.0.*",
-                "illuminate/console": "5.1.* || 5.2.*",
-                "illuminate/database": "5.1.* || 5.2.*",
-                "illuminate/routing": "5.1.* || 5.2.*",
+                "illuminate/console": "5.1.* || 5.2.* || 5.3.*",
+                "illuminate/database": "5.1.* || 5.2.* || 5.3.*",
+                "illuminate/routing": "5.1.* || 5.2.* || 5.3.*",
                 "mockery/mockery": "0.9.*",
                 "october/rain": "dev-develop",
                 "phpunit/phpunit": "^4.0 || ^5.0"
@@ -4850,7 +4789,7 @@
                 "jwt",
                 "laravel"
             ],
-            "time": "2016-08-10 19:35:09"
+            "time": "2016-08-30 13:00:29"
         },
         {
             "name": "webmozart/assert",
