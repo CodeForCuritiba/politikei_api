@@ -18,16 +18,8 @@ class AuthController extends Controller
 
     public function verify($username, $password)
     {
-        /*$user = User::where('email', $username)->first();
+        $user = User::where('email', $username)->first();
         if ($user && check($password, $user->password)) {
-            return $user;
-        }*/
-
-        if($username == 'politikei@politikei.org' && $password = 'politikei'){
-            $user = new User();
-            $user->name = 'Poltikei Dev';
-            $user->email = 'politikei@politikei.org';
-            $user->password = app('hash')->make('politikei');;
             return $user;
         }
 
