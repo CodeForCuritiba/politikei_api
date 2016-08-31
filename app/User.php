@@ -11,7 +11,7 @@ class User extends Model implements AuthenticatableContract, JWTSubject
 {
     use Authenticatable;
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'avatar_url'];
     protected $hidden = ['password', 'roles', 'confirmation', 'status', 'facebook_id'];
 
 

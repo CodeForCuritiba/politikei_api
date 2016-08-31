@@ -11,6 +11,7 @@ use JWTAuth;
 use Socialite;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Auth;
+use Log;
 
 class AuthController extends Controller
 {
@@ -114,15 +115,20 @@ class AuthController extends Controller
         $graphUrl = 'https://graph.facebook.com';
         $version = 'v2.7';
         $response = $client->get($graphUrl.'/me?fields=name,picture,email&access_token=' . $accessToken, ['verify' => false]);
-        $providerUser = json_decode($response->getBody());
-        $avatarUrl = $graphUrl.'/'.$version.'/'.$providerUser->id.'/picture';
+        $content = $response->getBody();
+        
+        Log::debug('facebook response: '.$content);
 
+        $providerUser = json_decode($content);
 
         $user = new User();
         $user[$provider.'_id'] = $providerUser->id;
         $user->name = isset($providerUser->name) ? $providerUser->name : null;
         $user->email = isset($providerUser->email) ? $providerUser->email : null;
-        //$user->avatar = $avatarUrl.'?type=normal';
+        if(isset($providerUser->picture) && isset($providerUser->picture->data) && isset($providerUser->picture->data->url))
+        {
+            $user['avatar_url'] = $providerUser->picture->data->url;
+        }
 
         return $user;
     }
@@ -132,10 +138,12 @@ class AuthController extends Controller
         $authUser = User::where($provider.'_id', $user[$provider.'_id'])->first();
 
         if ($authUser != null) {
-            return $authUser;
+            $user->update();
+        }
+        else {
+            $user->save();    
         }
 
-        $user->save();
         return $user;
     }
 
