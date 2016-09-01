@@ -11,4 +11,5 @@ class Parlamentar extends Model
 	protected $table = 'parlamentares';
     public $timestamps  = false;
     protected $fillable = ['nome', 'estado', 'partido_sigla', 'avatar_url'];
+
 }
