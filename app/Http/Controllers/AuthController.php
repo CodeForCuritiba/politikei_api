@@ -12,6 +12,7 @@ use Socialite;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Auth;
 use Log;
+use Exception;
 
 class AuthController extends Controller
 {
@@ -73,10 +74,12 @@ class AuthController extends Controller
 
     public function oAuth(Request $request, $provider)
     {
+        
         $accessToken = $request->input('accessToken');
         $uuid = $request->input('uuid');
 
         try {
+            
             //authenticate in provider
             $providerUser = $this->getProviderUser($provider, $accessToken);
 
@@ -94,7 +97,7 @@ class AuthController extends Controller
             return response()->json(compact('token'));
 
         } catch (Exception $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json(['error' => 'could_not_create_token', 'message'=>$e->getMessage()], 500);
         }
     }
 
@@ -106,7 +109,9 @@ class AuthController extends Controller
         //facebook stauff
         $graphUrl = 'https://graph.facebook.com';
         $version = 'v2.7';
+
         $response = $client->get($graphUrl.'/me?fields=name,picture,email&access_token=' . $accessToken, ['verify' => false]);
+
         $content = $response->getBody();
         
         Log::debug('facebook response: '.$content);

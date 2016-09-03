@@ -66,6 +66,8 @@ $app->singleton(
     palanik\lumen\Middleware\LumenCors::class
  ]);
 
+ $app->routeMiddleware(['checkuser'=>App\Http\Middleware\UserMiddleware::class]);
+
 
 /*
 |--------------------------------------------------------------------------
