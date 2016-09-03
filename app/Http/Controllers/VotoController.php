@@ -16,6 +16,11 @@ class VotoController extends Controller
      */
     public function votoUser(Request $request)
     {
+
+        // Get user from middleware
+
+        $userdata = $request->userdata;
+
         $this->validate($request,[
             'user_id'=>'integer|required',
             'proposicao_id'=>'integer|required',
