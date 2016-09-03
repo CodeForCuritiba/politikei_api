@@ -36,7 +36,7 @@ class User extends Model implements AuthenticatableContract, JWTSubject
             $graphUrl = 'https://graph.facebook.com';
             $version = 'v2.7';
 
-            $response = $client->get($graphUrl.'/me?fields=name,email&access_token=' . $token, ['verify' => false]);
+            $response = $client->get($graphUrl.'/me?fields=name,picture,email&access_token=' . $token, ['verify' => false]);
 
             $content = $response->getBody();
 

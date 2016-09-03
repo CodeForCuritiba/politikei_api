@@ -18,21 +18,19 @@ class VotoController extends Controller
     {
 
         // Get user from middleware
-
-        $userdata = $request->userdata;
+        $user = $request->userdata;
 
         $this->validate($request,[
-            'user_id'=>'integer|required',
             'proposicao_id'=>'integer|required',
             'voto'=>'string|size:1|required'
         ]);
 
-        $voto = VotosUsers::where('proposicao_id', $request->input('proposicao_id') )->where('user_id', $request->input('user_id') )->first();
+        $voto = VotosUsers::where('proposicao_id', $request->input('proposicao_id') )->where('user_id', $user->id)->first();
 
         if($voto == null)
         {
             $voto = new VotosUsers;
-            $voto->user_id = $request->input('user_id');
+            $voto->user_id = $user->id;
             $voto->proposicao_id = $request->input('proposicao_id');
         }
 

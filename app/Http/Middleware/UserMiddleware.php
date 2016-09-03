@@ -22,7 +22,14 @@ class UserMiddleware
         if (!$result){
             return response()->json(['error'=>"Invalid token"],422);
         }
-        $request->userdata = $result;
+
+        $provider = 'facebook';
+        $dbUser = User::where($provider.'_id',  $result->id)->first();
+        if ($dbUser == null) {
+            return response()->json(['error'=>"Invalid token"],422);
+        }
+
+        $request->userdata = $dbUser;
         return $next($request);
     }
 }
