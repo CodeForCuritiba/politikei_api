@@ -130,10 +130,7 @@ class AuthController extends Controller
         $authUser = User::where($provider.'_id', $user[$provider.'_id'])->first();
 
         if ($authUser != null) {
-            $user->update();
-        }
-        else {
-            $user->save();    
+            return $authUser;
         }
 
         return $user;

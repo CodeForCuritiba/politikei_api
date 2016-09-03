@@ -5,18 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
+use JWTAuth;
 
-/*
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use Illuminate\Validation\Validator;
-*/
 class UserController extends Controller
 {
     public function index()
     {
         $users = User::all();
         return response()->json($users);
+    }
+
+    public function me()
+    {
+        $user = JWTAuth::parseToken();
+        return response()->json(compact('user'));
     }
 
     public function store(Request $request)
