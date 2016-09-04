@@ -16,7 +16,7 @@ class CreateVotosParlamentaresTable extends Migration
             $table->increments('id');
             $table->integer('parlamentar_id')->unsigned();;
             $table->integer('proposicao_id')->unsigned();;
-            $table->int('voto', 1);  // 0 = abstenção / 1 = sim / 2 = não
+            $table->integer('voto', 1);  // 0 = abstenção / 1 = sim / 2 = não
             $table->timestamps();
 
             $table->foreign('parlamentar_id')->references('id')->on('parlamentares');
