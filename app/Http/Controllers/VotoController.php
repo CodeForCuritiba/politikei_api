@@ -69,4 +69,15 @@ class VotoController extends Controller
         $response = ['status'=>'Registrado'];
         return response()->json($response, 201);
     }
+
+    public function ranking(Request $request)
+    {
+        // Get user from middleware
+        $user = $request->userdata;
+
+
+        //Return ranking for authenticaded user
+
+        return response()->json(['not implemented'], 500);   
+    }
 }

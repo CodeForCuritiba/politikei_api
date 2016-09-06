@@ -33,6 +33,7 @@ $app->group(['prefix'=>'user'], function () use($app)
 $app->group(['prefix'=>'vote', 'middleware' => 'checkuser'], function () use($app)
 {
     $app->post('/user','App\Http\Controllers\VotoController@votoUser');
+    $app->post('/ranking','App\Http\Controllers\VotoController@ranking');
 });
 
 $app->group(['prefix'=>'parlamentary', 'middleware' => 'checkuser'], function () use($app)
