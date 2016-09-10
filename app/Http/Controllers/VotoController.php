@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\VotosUsers;
 use App\VotosParlamentares;
+use App\Ranking;
 
 class VotoController extends Controller
 {
@@ -54,11 +55,11 @@ class VotoController extends Controller
             'voto'=>'string|size:1|required'
         ]);
 
-        $voto = VotoParlamentar::where('proposicao_id', $request->input('proposicao_id') )->where('parlamentar_id', $request->input('parlamentar_id') )->first();
+        $voto = VotoParlamentares::where('proposicao_id', $request->input('proposicao_id') )->where('parlamentar_id', $request->input('parlamentar_id') )->first();
 
         if($voto == null)
         {
-            $voto = new VotoParlamentar();
+            $voto = new VotoParlamentares();
             $voto->parlamentar_id = $request->input('parlamentar_id');
             $voto->proposicao_id = $request->input('proposicao_id');
         }
@@ -72,12 +73,12 @@ class VotoController extends Controller
 
     public function ranking(Request $request)
     {
-        // Get user from middleware
-        $user = $request->userdata;
+       // Get user from middleware
+       $user = $request->userdata;
 
+       $ranking = Ranking::where('user_id', $user->id);
 
-        //Return ranking for authenticaded user
+       return response()->json(['ranking'=> $ranking]);
 
-        return response()->json(['not implemented'], 500);   
     }
 }
