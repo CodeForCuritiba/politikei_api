@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\VotosUsers;
 use App\VotosParlamentares;
@@ -76,7 +77,42 @@ class VotoController extends Controller
        // Get user from middleware
        $user = $request->userdata;
 
-       $ranking = Ranking::where('user_id', $user->id);
+       //$ranking = Ranking::where('user_id', $user->id);
+       $ranking = DB::select('Select parlamentar_id, parlamentar_nome, partido_sigla, QtdeProposicoes, Sim, Nao, NaoSei
+                                      from Ranking WHERE User_id=:id', ['id' => $user->id]);
+       /*
+       $ranking = DB::select('Select
+                                  p.id as parlamentar_id,
+                                  p.nome as parlamentar_nome,
+                                  p.partido_sigla,
+                                  Sum(v.UserMatch) as QtdeProposicoes,
+                                  ROUND((Sum(v.Sim)/Count(Distinct v.proposicao_id))*100,2) as Sim,
+                                  ROUND((Sum(v.Nao)/Count(Distinct v.proposicao_id))*100,2) as Nao,
+                                  ROUND((Sum(v.NaoSei)/Count(Distinct v.proposicao_id))*100,2) as NaoSei
+                              From
+                                  Parlamentares p
+                                      Inner Join
+                                          (SELECT
+                                              vu.User_id,
+                                              vp.proposicao_id,
+                                              vp.parlamentar_id,
+                                              if(vp.voto = 0, 1, 0) AS Nao,
+                                              if(vp.voto = 1, 1, 0) AS Sim,
+                                              if(vp.voto = 2, 1, 0) AS NaoSei,
+                                              if(vp.voto = vu.voto, 1, 0) as UserMatch
+                                          FROM
+                                              Votos_Parlamentares vp
+                                                  INNER JOIN votos_users vu ON vp.proposicao_id = vu.proposicao_id) v
+                                      on p.id = v.parlamentar_id
+                              WHERE v.User_Id = :id
+                              Group by
+                                  v.User_id,
+                                  p.nome,
+                                  p.partido_sigla
+                              Order by
+                                  Sum(v.UserMatch) desc, p.nome asc
+                              Limit 20', ['id' => $user->id]);
+       */
 
        return response()->json(['ranking'=> $ranking]);
 
