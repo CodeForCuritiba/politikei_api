@@ -79,7 +79,7 @@ class VotoController extends Controller
 
        //$ranking = Ranking::where('user_id', $user->id);
        $ranking = DB::select('Select parlamentar_id, parlamentar_nome, partido_sigla, QtdeProposicoes, Sim, Nao, NaoSei
-                                      from Ranking WHERE User_id=:id', ['id' => $user->id]);
+                                      from Ranking WHERE User_id=:id order by Sim', ['id' => $user->id]);
        /*
        $ranking = DB::select('Select
                                   p.id as parlamentar_id,
