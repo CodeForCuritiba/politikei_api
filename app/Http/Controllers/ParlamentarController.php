@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Parlamentar;
+use App\VotosParlamentares;
 
 class ParlamentarController extends Controller
 {
@@ -76,11 +78,30 @@ class ParlamentarController extends Controller
             return response()->json(['id'=>["The id field is required or invalid id"] ],422);
         }
 
-        $find = Parlamentar::find($id);
-        if ($find == null) {
-            return response()->json(['id'=>["User not found"] ],404);
+        $parlamentar = Parlamentar::find($id);
+
+        if ($parlamentar == null) {
+            return response()->json(['id'=>["parliamentary not found"] ],404);
         }
-        return $find;
+
+        // Get user from middleware
+        $user = $request->userdata;
+
+        $ranking = DB::select('Select QtdeProposicoes, Sim, Nao, NaoSei
+                                      from Ranking WHERE User_id=:id and parlamentar_id=:parlamentar_id', 
+                                      ['id' => $user->id, 'parlamentar_id' => $id]);
+
+        $votos = VotosParlamentares::where('parlamentar_id', $id)
+                ->join('proposicoes', 'votos_parlamentares.proposicao_id', '=', 'proposicoes.id')
+                ->get(array(
+                        'votos_parlamentares.*', 
+                        'proposicoes.*'
+                    )
+                );
+
+        $response = ['parliamentary'=>$parlamentar, 'votos'=>$votos, 'ranking'=>$ranking];
+
+        return $response;
     }
 
     /**
