@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Parlamentar;
 use App\VotosParlamentares;
+use App\VotosUsers;
 
 class ParlamentarController extends Controller
 {
@@ -86,9 +87,10 @@ class ParlamentarController extends Controller
         // Get user from middleware
         $user = $request->userdata;
 
-        $ranking = DB::select('Select QtdeProposicoes, Sim, Nao, NaoSei
-                                      from Ranking WHERE User_id=:id and parlamentar_id=:parlamentar_id', 
-                                      ['id' => $user->id, 'parlamentar_id' => $id]);
+        $ranking = DB::table('ranking')
+                    ->where('user_id', $user->id)
+                    ->where('parlamentar_id', $id)
+                    ->get();
 
         $votos = VotosParlamentares::where('parlamentar_id', $id)
                 ->join('proposicoes', 'votos_parlamentares.proposicao_id', '=', 'proposicoes.id')
@@ -98,7 +100,11 @@ class ParlamentarController extends Controller
                     )
                 );
 
-        $response = ['parliamentary'=>$parlamentar, 'votos'=>$votos, 'ranking'=>$ranking];
+        $response = [
+                 'parliamentary'=>$parlamentar,
+                 'ranking'=> $ranking,
+                 'votes_propositions'=> $votos
+             ];
 
         return $response;
     }

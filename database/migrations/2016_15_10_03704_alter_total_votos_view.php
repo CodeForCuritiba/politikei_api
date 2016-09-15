@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTotalVotosView extends Migration
+class AlterTotalVotosView extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateTotalVotosView extends Migration
      */
     public function up()
     {
-        DB::statement("Alter View totalvotos as
+        DB::raw("Alter View totalvotos as
 			Select
 				vp.proposicao_id,
  vp.parlamentar_id, vu.user_id,
@@ -31,6 +31,6 @@ class CreateTotalVotosView extends Migration
      */
     public function down()
     {
-        DB::statement("drop view totalvotos");
+        DB::raw("drop view totalvotos");
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRankingView extends Migration
+class AlterRankingView extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateRankingView extends Migration
      */
     public function up()
     {
-        DB::statement("Alter View ranking as
+        DB::raw("Alter View ranking as
 			Select
 
 				v.user_id,
@@ -43,6 +43,6 @@ class CreateRankingView extends Migration
      */
     public function down()
     {
-        DB::statement("DROP VIEW Ranking");
+        DB::raw("DROP VIEW Ranking");
     }
 }

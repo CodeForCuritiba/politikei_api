@@ -7,13 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Ranking extends Model
 {
     public $timestamps  = false;
-    protected $fillable = ['user_id',
+    protected $fillable = [
+                            'user_id',
                             'parlamentar_id',
-                            'parlamentar_nome',
+                            'nome',
+                            'email',
+                            'numero_eleitoral',
                             'partido_sigla',
-                            'QtdeProposicoes',
-                            'Sim',
-                            'Nao',
-                            'NaoSei'
+                            'avatar_url',
+                            'coligacao',
+                            'link_perfil',
+                            'total_votos_usuario',
+                            'igual',
+                            'diferente',
+                            'indiferente'
                           ];
 }
