@@ -14,17 +14,17 @@ class CreateRankingView extends Migration
     {
         DB::statement("Create View Ranking as
                         Select
-                            v.User_Id,
+                            v.user_id,
                             p.id as parlamentar_id,
                             p.nome as parlamentar_nome,
                             p.partido_sigla,
                             Sum(v.UserMatch) as QtdeProposicoes,
-                            ROUND((Sum(v.Sim)/Count(Distinct v.proposicao_id))*100,2) as Sim,
-                            ROUND((Sum(v.Nao)/Count(Distinct v.proposicao_id))*100,2) as Nao,
-                            ROUND((Sum(v.NaoSei)/Count(Distinct v.proposicao_id))*100,2) as NaoSei
+                            ROUND((Sum(v.Sim)/Count(Distinct v.proposicao_id))*100,2) as sim,
+                            ROUND((Sum(v.Nao)/Count(Distinct v.proposicao_id))*100,2) as nao,
+                            ROUND((Sum(v.NaoSei)/Count(Distinct v.proposicao_id))*100,2) as naosei
                         From
-                            Parlamentares p
-                                Inner Join TotalVotos V
+                            parlamentares p
+                                Inner Join TotalVotos v
                                     on p.id = v.parlamentar_id
                         Group by
                             v.User_id,
