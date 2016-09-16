@@ -17,12 +17,13 @@ class AlterRankingTotalVotosViewFixVotes extends Migration
                 Select
                     vp.proposicao_id,
                     vp.parlamentar_id, vu.user_id,
-                    if(((vu.voto <> 2) && (vp.voto = vu.voto)), 1, 0) as igual,
-                    if(((vu.voto <> 2) && (vp.voto <> vu.voto)), 1, 0) as diferente,
-                    if((vu.voto = 2), 1, 0) as indiferente
+                    if(((vu.voto <> 2) && (vp.voto <> 2) && (vp.voto = vu.voto)), 1, 0) as igual,
+                    if(((vu.voto <> 2) && (vp.voto <> 2) && (vp.voto <> vu.voto)), 1, 0) as diferente,
+                    if(((vu.voto <> 2) && (vp.voto = 2)), 1, 0) as indiferente,
+                    if((vu.voto = 2), 1, 0) as neutro
                 From
                     votos_parlamentares vp
-                    Inner Join votos_users vu ON vp.proposicao_id = vu.proposicao_id
+                    left Join votos_users vu ON vp.proposicao_id = vu.proposicao_id
         ");
     }
 
