@@ -80,7 +80,6 @@ class VotoController extends Controller
        $ranking = DB::table('ranking')
             ->where('user_id', $user->id)
             ->orderBy('igual', 'desc')
-            ->orderBy('total_votos_usuario', 'asc')
             ->orderBy('diferente', 'asc')
             ->get();
 
