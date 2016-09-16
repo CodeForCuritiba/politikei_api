@@ -27,7 +27,8 @@ class AlterRankingViewGroupByUser extends Migration
                 count(distinct v.proposicao_id) as total_votos_usuario,
                 Sum(v.igual) as igual,
                 Sum(v.diferente) as diferente,
-                Sum(v.indiferente) as indiferente
+                Sum(v.indiferente) as indiferente,
+                Sum(v.neutro) as neutro
             From
                 parlamentares p
                 Inner Join totalvotos v on p.id = v.parlamentar_id
