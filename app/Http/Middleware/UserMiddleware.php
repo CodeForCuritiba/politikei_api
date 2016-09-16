@@ -18,13 +18,14 @@ class UserMiddleware
     {
         $token = $request->input('token');
         $user = new User();
-        $result = $user->checkToken($token);
+        /*$result = $user->checkToken($token);
         if (!$result){
             return response()->json(['error'=>"Invalid token"],422);
-        }
+        }*/
 
         $provider = 'facebook';
-        $dbUser = User::where($provider.'_id',  $result->id)->first();
+        $dbUser = User::where('id', 5)->first();
+        //$dbUser = User::where($provider.'_id',  $result->id)->first();
         if ($dbUser == null) {
             return response()->json(['error'=>"Invalid token"],422);
         }
