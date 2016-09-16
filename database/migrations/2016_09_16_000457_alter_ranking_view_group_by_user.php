@@ -32,7 +32,7 @@ class AlterRankingViewGroupByUser extends Migration
                 parlamentares p
                 Inner Join totalvotos v on p.id = v.parlamentar_id
             Group by
-                v.user_id, p.id
+                p.id, v.user_id
             Order by
                 igual desc, diferente asc, p.nome asc;
         ");
