@@ -23,7 +23,7 @@ class ProposicaoController extends Controller
         //$proposicoes = Proposicao::select('id', 'tipo', 'nome', 'parlamentar_id', 'categoria_id', 'ementa', 'resumo', 'nome', 'camara_id', 'situacao', 'descricao', 'colaborador_id')->whereNotNull('parlamentar_id')->get();
         //$proposicoes = Proposicao::select('id', 'nome', 'descricao', 'resumo', 'ementa', 'categoria', 'camara', 'situacao', 'autor', 'parlamentar', 'parlamentar_partido', 'data_apresentacao', 'data_conclusao', 'regime_tramitacao', 'apreciacao', 'explicacao_ementa','link','numero','ano' )->get();
 
-        $proposicoes = Proposicao::all();
+        $proposicoes = Proposicao::where('inativa', false)->get();
 
         foreach ($proposicoes as $key => $value) {
             $proposicoes[$key]->votos_favor = $value->votosUser()->where('voto', '0')->count();
