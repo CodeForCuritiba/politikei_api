@@ -101,7 +101,7 @@ class ParlamentarController extends Controller
                 );
 
         $response = [
-                 'parliamentary'=>$parlamentar,
+                 'parlamentary'=>$parlamentar,
                  'ranking'=> $ranking,
                  'votes_propositions'=> $votos
              ];
