@@ -94,6 +94,7 @@ class ParlamentarController extends Controller
 
         $votos = VotosParlamentares::where('parlamentar_id', $id)
                 ->join('proposicoes', 'votos_parlamentares.proposicao_id', '=', 'proposicoes.id')
+                ->where('proposicoes.inativa', '=', 0)
                 ->get(array(
                         'votos_parlamentares.*', 
                         'proposicoes.*'
